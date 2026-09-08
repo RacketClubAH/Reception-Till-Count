@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#003087">
+  <title>Aphrodite Hills — Till Count</title>
+  <link rel="apple-touch-icon" href="assets/aphrodite-logo-mple.png">
+  <style>
+    :root{
+      --mple:#003087;--mple-soft:rgba(0,48,135,.09);--mple-line:rgba(0,48,135,.22);
+      --bronze:#8E7A6B;--pearl:#CFCDC9;--shell:#D6D1C3;--foam:#F9F6F4;
+      --ink:#4d4d4d;--ink-soft:#7a7a78;--line:#E4E0D8;--danger:#9a4434;
+      --success:#426a4d;--success-soft:#eaf2ec;--danger-soft:#f7ebe8;--warn:#8a6b2e;--warn-soft:#f6f0df;
+      --display:"IvyPresto Headline","Playfair Display",Georgia,serif;
+      --ui:"Geologica","Segoe UI",system-ui,-apple-system,sans-serif;
+      --shadow:0 1px 2px rgba(0,0,0,.04),0 10px 35px rgba(0,32,90,.07);
+    }
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--foam);color:var(--ink);font-family:var(--ui)}
+    button,input,select{font:inherit} button{cursor:pointer} .hidden{display:none!important}
+    .topbar{position:sticky;top:0;z-index:30;background:rgba(249,246,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:max(10px,env(safe-area-inset-top)) 18px 10px}
+    .topbar-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:10px}.brand img{width:35px;height:35px;object-fit:contain}.brand-copy b{display:block;font-family:var(--display);font-size:18px;font-weight:500;color:var(--mple)}.brand-copy span{display:block;font-size:11px;color:var(--ink-soft);letter-spacing:.05em;text-transform:uppercase}
+    .nav{display:flex;gap:7px}.nav button{border:1px solid var(--mple-line);background:white;color:var(--mple);border-radius:999px;padding:9px 13px;font-size:12px;font-weight:600}.nav button.active{background:var(--mple);color:white;border-color:var(--mple)}
+    main{max-width:1180px;margin:0 auto;padding:22px 18px 50px}
+    .hero{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:3px 0 18px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--bronze);font-weight:700}.hero h1{font-family:var(--display);color:var(--mple);font-size:38px;line-height:1;margin:5px 0 6px;font-weight:500}.hero p{margin:0;color:var(--ink-soft);font-size:14px}.server-status{font-size:12px;color:var(--ink-soft);white-space:nowrap}
+    .layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.65fr);gap:18px;align-items:start}
+    .card{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+    .controls{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);margin:0 0 6px}.field select{width:100%;height:50px;border:1px solid var(--line);border-radius:11px;background:white;padding:0 13px;color:var(--ink)}.field select:focus{outline:none;border-color:var(--mple)}
+    .till-switch{display:grid;grid-template-columns:1fr 1fr;gap:7px}.till-switch button{height:50px;border:1px solid var(--mple-line);background:white;color:var(--mple);border-radius:11px;font-weight:700}.till-switch button.active{background:var(--mple);border-color:var(--mple);color:white}
+    .count-card{overflow:hidden}.count-head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.count-head h2{font-family:var(--display);font-size:23px;font-weight:500;color:var(--mple);margin:0}.reset{border:0;background:transparent;color:var(--bronze);font-size:12px;font-weight:700;padding:8px}
+    .denom-list{padding:4px 0}.denom{display:grid;grid-template-columns:72px 1fr 115px;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #f0ede7}.denom:last-child{border-bottom:0}.money{font-weight:800;color:var(--mple);font-size:16px}.qty{display:grid;grid-template-columns:46px minmax(60px,1fr) 46px;gap:6px;align-items:center}.qty button{height:44px;border:1px solid var(--mple-line);background:var(--foam);color:var(--mple);border-radius:10px;font-size:21px;line-height:1}.qty input{min-width:0;width:100%;height:44px;text-align:center;border:1px solid var(--line);border-radius:10px;background:white;font-weight:700;font-size:16px;color:var(--ink)}.qty input:focus{outline:none;border-color:var(--mple)}.subtotal{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+    .summary{position:sticky;top:76px;padding:18px}.summary-title{font-family:var(--display);font-size:24px;color:var(--mple);font-weight:500;margin:0 0 15px}.total-box{padding:16px;border-radius:13px;background:var(--foam);border:1px solid var(--line);margin-bottom:13px}.total-label{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}.total-value{font-family:var(--display);font-size:42px;color:var(--mple);line-height:1.05;margin-top:3px;font-variant-numeric:tabular-nums}.summary-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.summary-row:last-of-type{border-bottom:0}.summary-row strong{font-variant-numeric:tabular-nums}.status{display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:10px;margin:12px 0;font-size:13px;font-weight:800}.status.neutral{background:var(--mple-soft);color:var(--mple)}.status.ok{background:var(--success-soft);color:var(--success)}.status.short{background:var(--danger-soft);color:var(--danger)}.status.over{background:var(--warn-soft);color:var(--warn)}
+    .save{width:100%;height:54px;border:0;border-radius:12px;background:var(--mple);color:white;font-weight:800;font-size:15px}.save:disabled{opacity:.45;cursor:not-allowed}.save-note{text-align:center;color:var(--ink-soft);font-size:11px;margin:9px 3px 0;line-height:1.4}
+    .history-card{overflow:hidden}.history-head{padding:16px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.history-head h2{font-family:var(--display);font-size:25px;font-weight:500;color:var(--mple);margin:0}.history-tools{display:flex;gap:7px}.history-tools select,.history-tools button{height:38px;border:1px solid var(--mple-line);background:white;color:var(--mple);border-radius:9px;padding:0 10px;font-size:12px}.table-wrap{overflow:auto}.history-table{width:100%;border-collapse:collapse;min-width:770px}.history-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);padding:11px 14px;background:#fcfbf9;border-bottom:1px solid var(--line)}.history-table td{padding:12px 14px;border-bottom:1px solid #f0ede7;font-size:13px}.history-table tr:last-child td{border-bottom:0}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800}.pill.ok{background:var(--success-soft);color:var(--success)}.pill.short{background:var(--danger-soft);color:var(--danger)}.pill.over{background:var(--warn-soft);color:var(--warn)}.empty{padding:34px;text-align:center;color:var(--ink-soft);font-size:13px}
+    .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#353535;color:white;padding:11px 16px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.2)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .veil{position:fixed;inset:0;background:rgba(249,246,244,.72);backdrop-filter:blur(3px);z-index:80;display:flex;align-items:center;justify-content:center}.spin{width:30px;height:30px;border:3px solid var(--mple-soft);border-top-color:var(--mple);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:820px){main{padding:16px 12px 40px}.brand-copy span{display:none}.hero{align-items:flex-start}.hero h1{font-size:31px}.server-status{display:none}.layout{grid-template-columns:1fr}.summary{position:static;order:-1}.controls{grid-template-columns:1fr}.denom{grid-template-columns:62px 1fr 92px;padding:9px 12px}.qty{grid-template-columns:44px minmax(48px,1fr) 44px}.subtotal{font-size:13px}.topbar{padding-left:12px;padding-right:12px}.nav button{padding:8px 10px}.history-head{align-items:flex-start;flex-direction:column}.history-tools{width:100%}.history-tools select{flex:1}}
+    @media(max-width:460px){.hero h1{font-size:28px}.denom{grid-template-columns:54px 1fr 78px;gap:7px}.money{font-size:14px}.qty{grid-template-columns:38px minmax(42px,1fr) 38px;gap:4px}.qty button,.qty input{height:42px}.subtotal{font-size:12px}.total-value{font-size:38px}.brand-copy b{font-size:16px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><img src="assets/aphrodite-logo-mple.png" alt="Aphrodite Hills"><div class="brand-copy"><b>Aphrodite Hills</b><span>Reception cash control</span></div></div>
+      <nav class="nav"><button id="navCount" class="active">Count till</button><button id="navHistory">History</button></nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="countView">
+      <div class="hero"><div><div class="eyebrow">Reception</div><h1>Cash till count</h1><p>Count each denomination from €100 down to 1 cent.</p></div><div class="server-status" id="serverStatus">Connecting…</div></div>
+      <div class="controls card">
+        <div class="field"><label>Receptionist</label><select id="receptionist"><option value="">Select your name…</option></select></div>
+        <div class="field"><label>Till</label><div class="till-switch"><button class="active" data-till="Till 1">Till 1</button><button data-till="Till 2">Till 2</button></div></div>
+      </div>
+      <div class="layout">
+        <section class="count-card card"><div class="count-head"><h2>Denominations</h2><button class="reset" id="resetBtn">Clear count</button></div><div class="denom-list" id="denomList"></div></section>
+        <aside class="summary card">
+          <h2 class="summary-title">Count summary</h2>
+          <div class="total-box"><div class="total-label">Total cash</div><div class="total-value" id="totalCash">€0.00</div></div>
+          <div class="summary-row"><span>Expected float</span><strong id="expectedCash">€200.00</strong></div>
+          <div class="summary-row"><span>Difference</span><strong id="difference">€−200.00</strong></div>
+          <div class="status neutral" id="statusBox">Start counting</div>
+          <button class="save" id="saveBtn" disabled>Save till count</button>
+          <div class="save-note">The saved time is recorded by the Google Apps Script server. Previous counts are append-only.</div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="historyView" class="hidden">
+      <div class="hero"><div><div class="eyebrow">Audit log</div><h1>Count history</h1><p>Every submitted till count, newest first.</p></div></div>
+      <section class="history-card card">
+        <div class="history-head"><h2>Saved counts</h2><div class="history-tools"><select id="historyTill"><option value="">All tills</option><option>Till 1</option><option>Till 2</option></select><button id="refreshHistory">Refresh</button></div></div>
+        <div class="table-wrap"><table class="history-table"><thead><tr><th>Date</th><th>Time</th><th>Receptionist</th><th>Till</th><th>Total</th><th>Expected</th><th>Difference</th><th>Status</th></tr></thead><tbody id="historyBody"></tbody></table><div class="empty hidden" id="historyEmpty">No saved counts yet.</div></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div><div class="veil" id="veil"><div class="spin"></div></div>
+
+<script>
+  // Paste your deployed Apps Script Web App URL here.
+  const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+  const DENOMS = [
+    {label:"€100",value:100},{label:"€50",value:50},{label:"€20",value:20},{label:"€10",value:10},{label:"€5",value:5},
+    {label:"€2",value:2},{label:"€1",value:1},{label:"50c",value:.5},{label:"20c",value:.2},{label:"10c",value:.1},{label:"5c",value:.05},{label:"2c",value:.02},{label:"1c",value:.01}
+  ];
+  const state={till:"Till 1",expected:200,counts:{},history:[]};
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const eur=n=>new Intl.NumberFormat("en-IE",{style:"currency",currency:"EUR"}).format(Number(n||0));
+  function toast(msg){const e=$("#toast");e.textContent=msg;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2600)}
+  function setLoading(on){$("#veil").classList.toggle("hidden",!on)}
+  async function api(payload){
+    if(!SCRIPT_URL || SCRIPT_URL.includes("PASTE_YOUR")) throw new Error("Add your Apps Script URL to SCRIPT_URL in index.html first.");
+    const r=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    const data=await r.json(); if(!data.ok) throw new Error(data.error||"Request failed"); return data;
+  }
+  function renderDenoms(){
+    $("#denomList").innerHTML=DENOMS.map((d,i)=>`<div class="denom" data-i="${i}"><div class="money">${d.label}</div><div class="qty"><button type="button" data-op="minus" aria-label="Subtract one">−</button><input inputmode="numeric" pattern="[0-9]*" min="0" step="1" value="${state.counts[i]||0}" aria-label="Quantity of ${d.label}"><button type="button" data-op="plus" aria-label="Add one">+</button></div><div class="subtotal">${eur((state.counts[i]||0)*d.value)}</div></div>`).join("");
+  }
+  function recalc(){
+    let total=0,items=0; DENOMS.forEach((d,i)=>{const q=Math.max(0,parseInt(state.counts[i]||0,10)||0);total+=q*d.value;items+=q}); total=Math.round(total*100)/100;
+    const diff=Math.round((total-state.expected)*100)/100;
+    $("#totalCash").textContent=eur(total);$("#expectedCash").textContent=eur(state.expected);$("#difference").textContent=(diff>0?"+":"")+eur(diff);
+    const box=$("#statusBox");box.className="status "+(items===0?"neutral":diff===0?"ok":diff<0?"short":"over");box.textContent=items===0?"Start counting":diff===0?"Balanced":diff<0?`Short by ${eur(Math.abs(diff))}`:`Over by ${eur(diff)}`;
+    $("#saveBtn").disabled=!$("#receptionist").value || items===0;
+    return {total,diff,items};
+  }
+  function updateRow(row,i){const q=Math.max(0,parseInt(state.counts[i]||0,10)||0);row.querySelector("input").value=q;row.querySelector(".subtotal").textContent=eur(q*DENOMS[i].value);recalc()}
+  $("#denomList").addEventListener("click",e=>{const b=e.target.closest("button[data-op]");if(!b)return;const row=b.closest(".denom"),i=+row.dataset.i,q=Math.max(0,parseInt(state.counts[i]||0,10)||0);state.counts[i]=b.dataset.op==="plus"?q+1:Math.max(0,q-1);updateRow(row,i)});
+  $("#denomList").addEventListener("input",e=>{if(!e.target.matches("input"))return;const row=e.target.closest(".denom"),i=+row.dataset.i;state.counts[i]=Math.max(0,parseInt(e.target.value||0,10)||0);row.querySelector(".subtotal").textContent=eur(state.counts[i]*DENOMS[i].value);recalc()});
+  $("#receptionist").addEventListener("change",recalc);
+  $$(".till-switch button").forEach(b=>b.addEventListener("click",()=>{$$(".till-switch button").forEach(x=>x.classList.toggle("active",x===b));state.till=b.dataset.till}));
+  $("#resetBtn").addEventListener("click",()=>{if(!Object.values(state.counts).some(Boolean)||confirm("Clear the current till count?")){state.counts={};renderDenoms();recalc()}});
+  $("#saveBtn").addEventListener("click",async()=>{
+    const receptionist=$("#receptionist").value,{total,diff,items}=recalc(); if(!receptionist||!items)return;
+    const detail=DENOMS.map((d,i)=>({denomination:d.label,value:d.value,quantity:Number(state.counts[i]||0),subtotal:Math.round(Number(state.counts[i]||0)*d.value*100)/100}));
+    const btn=$("#saveBtn");btn.disabled=true;btn.textContent="Saving…";
+    try{const r=await api({action:"saveCount",receptionist,till:state.till,counts:detail,total,expected:state.expected,difference:diff});toast(`Saved ${state.till} · ${eur(total)}`);state.counts={};renderDenoms();recalc();$("#serverStatus").textContent=`Last saved ${r.time||"just now"}`}
+    catch(err){toast(err.message);recalc()} finally{btn.textContent="Save till count"}
+  });
+  async function loadConfig(){
+    try{const r=await api({action:"getConfig"});state.expected=Number(r.expected||200);const sel=$("#receptionist");sel.innerHTML='<option value="">Select your name…</option>'+((r.receptionists||[]).map(n=>`<option>${escapeHtml(n)}</option>`).join(""));$("#serverStatus").textContent="Connected";recalc()}
+    catch(err){$("#serverStatus").textContent="Setup required";toast(err.message)}finally{setLoading(false)}
+  }
+  function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]))}
+  async function loadHistory(){
+    const body=$("#historyBody");body.innerHTML='<tr><td colspan="8">Loading…</td></tr>';
+    try{const r=await api({action:"getHistory",till:$("#historyTill").value||"",limit:500});state.history=r.history||[];renderHistory()}
+    catch(err){body.innerHTML="";$("#historyEmpty").classList.remove("hidden");$("#historyEmpty").textContent=err.message}
+  }
+  function renderHistory(){const body=$("#historyBody"),empty=$("#historyEmpty");if(!state.history.length){body.innerHTML="";empty.classList.remove("hidden");empty.textContent="No saved counts yet.";return}empty.classList.add("hidden");body.innerHTML=state.history.map(r=>{const cls=r.status==="Balanced"?"ok":r.status==="Short"?"short":"over";return `<tr><td>${escapeHtml(r.date)}</td><td>${escapeHtml(r.time)}</td><td>${escapeHtml(r.receptionist)}</td><td>${escapeHtml(r.till)}</td><td><strong>${eur(r.total)}</strong></td><td>${eur(r.expected)}</td><td>${Number(r.difference)>0?"+":""}${eur(r.difference)}</td><td><span class="pill ${cls}">${escapeHtml(r.status)}</span></td></tr>`}).join("")}
+  function showView(which){const history=which==="history";$("#countView").classList.toggle("hidden",history);$("#historyView").classList.toggle("hidden",!history);$("#navCount").classList.toggle("active",!history);$("#navHistory").classList.toggle("active",history);if(history)loadHistory()}
+  $("#navCount").addEventListener("click",()=>showView("count"));$("#navHistory").addEventListener("click",()=>showView("history"));$("#refreshHistory").addEventListener("click",loadHistory);$("#historyTill").addEventListener("change",loadHistory);
+  renderDenoms();recalc();loadConfig();
+</script>
+</body>
+</html>
